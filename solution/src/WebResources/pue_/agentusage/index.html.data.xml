@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{3f955e13-2c34-4f12-a1fd-7d673ceda013}</WebResourceId>
+  <Name>pue_/agentusage/index.html</Name>
+  <DisplayName>Agent Usage Dashboard</DisplayName>
+  <Description>Dashboard entry point for Dynamics 365 Customer Service.</Description>
+  <LanguageCode>0</LanguageCode>
+  <WebResourceType>1</WebResourceType>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>0</IsCustomizable>
+  <CanBeDeleted>0</CanBeDeleted>
+  <IntroducedVersion>0.1.0.0</IntroducedVersion>
+  <FileName>/WebResources/pue_/agentusage/index.html</FileName>
+</WebResource>

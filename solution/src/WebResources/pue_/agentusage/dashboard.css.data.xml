@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{acd1f4ac-5660-4140-98f3-9c126b60b5ee}</WebResourceId>
+  <Name>pue_/agentusage/dashboard.css</Name>
+  <DisplayName>Agent Usage Dashboard - Styles</DisplayName>
+  <Description>Styles for the Agent Usage Dashboard.</Description>
+  <LanguageCode>0</LanguageCode>
+  <WebResourceType>2</WebResourceType>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>0</IsCustomizable>
+  <CanBeDeleted>0</CanBeDeleted>
+  <IntroducedVersion>0.1.0.0</IntroducedVersion>
+  <FileName>/WebResources/pue_/agentusage/dashboard.css</FileName>
+</WebResource>

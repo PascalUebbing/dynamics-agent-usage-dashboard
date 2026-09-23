@@ -1,0 +1,56 @@
+{
+  "name": "dynamics-agent-usage-dashboard",
+  "version": "0.1.0",
+  "description": "Open-source Dynamics 365 dashboard for Customer Intent Agent usage and Copilot Credits.",
+  "license": "MIT",
+  "author": "Pascal Uebbing",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PascalUebbing/dynamics-agent-usage-dashboard.git"
+  },
+  "homepage": "https://github.com/PascalUebbing/dynamics-agent-usage-dashboard#readme",
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "preview": "vite preview",
+    "solution:validate": "node scripts/validate-solution.mjs",
+    "solution:pack": "node scripts/pack-solution.mjs"
+  },
+  "dependencies": {
+    "@fluentui/react-components": "^9.74.8",
+    "@fluentui/react-icons": "^2.0.341",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "overrides": {
+    "@fluentui/react-popover": "9.14.8",
+    "@fluentui/react-positioning": "9.23.2",
+    "@fluentui/react-tooltip": "9.10.6"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@vitest/coverage-v8": "^5.0.1",
+    "archiver": "^8.0.0",
+    "happy-dom": "^20.14.5",
+    "oxlint": "^1.81.0",
+    "prettier": "^4.0.0-alpha.13",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  }
+}

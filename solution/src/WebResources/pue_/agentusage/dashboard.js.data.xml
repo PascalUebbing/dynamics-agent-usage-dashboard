@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebResource>
+  <WebResourceId>{8c180a60-1bb9-42b6-8f97-52451ea5905f}</WebResourceId>
+  <Name>pue_/agentusage/dashboard.js</Name>
+  <DisplayName>Agent Usage Dashboard - Application</DisplayName>
+  <Description>React application bundle for the Agent Usage Dashboard.</Description>
+  <LanguageCode>0</LanguageCode>
+  <WebResourceType>3</WebResourceType>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>0</IsCustomizable>
+  <CanBeDeleted>0</CanBeDeleted>
+  <IntroducedVersion>0.1.0.0</IntroducedVersion>
+  <FileName>/WebResources/pue_/agentusage/dashboard.js</FileName>
+</WebResource>

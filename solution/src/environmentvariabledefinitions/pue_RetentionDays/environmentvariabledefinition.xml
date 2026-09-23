@@ -1,0 +1,16 @@
+<environmentvariabledefinition schemaname="pue_RetentionDays">
+  <defaultvalue>365</defaultvalue>
+  <displayname default="Agent Usage Retention Days">
+    <label description="Agent Usage Retention Days" languagecode="1033" />
+    <label description="Aufbewahrungstage fuer Agent Usage" languagecode="1031" />
+  </displayname>
+  <description default="Number of days retained in the Agent Usage credit fact table.">
+    <label description="Number of days retained in the Agent Usage credit fact table." languagecode="1033" />
+    <label description="Anzahl der Aufbewahrungstage in der Credit-Faktentabelle." languagecode="1031" />
+  </description>
+  <introducedversion>0.1.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

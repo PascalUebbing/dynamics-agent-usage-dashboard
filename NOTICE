@@ -1,0 +1,13 @@
+Dynamics Agent Usage Dashboard
+Copyright (c) 2026 Pascal Uebbing
+
+Portions of the Dataverse credit-sync solution, including the cat_agentdetail,
+cat_tenantcapacity and cat_syncmetadata table definitions and the daily Power
+Automate flow, are derived from:
+
+  Copilot Credit Consumption
+  Copyright (c) 2026 Copilot Credit Consumption contributors
+  https://github.com/PetrosFeleskouras/copilot-credit-consumption
+
+Those portions are used under the MIT License. The upstream license notice is
+preserved in docs/third-party/copilot-credit-consumption-LICENSE.

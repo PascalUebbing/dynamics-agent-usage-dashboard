@@ -1,0 +1,15 @@
+<environmentvariabledefinition schemaname="pue_CustomerIntentAgentResourceId">
+  <displayname default="Customer Intent Agent Resource ID">
+    <label description="Customer Intent Agent Resource ID" languagecode="1033" />
+    <label description="Ressourcen-ID des Customer Intent Agent" languagecode="1031" />
+  </displayname>
+  <description default="Power Platform Licensing API resource ID mapped to the Customer Intent Agent.">
+    <label description="Power Platform Licensing API resource ID mapped to the Customer Intent Agent." languagecode="1033" />
+    <label description="Dem Customer Intent Agent zugeordnete Ressourcen-ID der Power Platform Licensing API." languagecode="1031" />
+  </description>
+  <introducedversion>0.1.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

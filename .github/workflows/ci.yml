@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Build, test, and package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build dashboard
+        run: npm run build
+
+      - name: Validate solution source
+        run: npm run solution:validate
+
+      - name: Pack solutions
+        run: npm run solution:pack -- --version 0.1.0
+
+      - name: Upload solution packages
+        uses: actions/upload-artifact@v7
+        with:
+          name: dynamics-agent-usage-dashboard-solutions
+          path: solution/out/*.zip
+          if-no-files-found: error
+          retention-days: 14
