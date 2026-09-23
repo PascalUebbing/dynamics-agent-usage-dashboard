@@ -54,6 +54,10 @@ for (const connection of ['ccsync_bapref', 'ccsync_dvhttpref', 'ccsync_dvref']) 
   }
 }
 
+if (!customizationsXml.includes('<WebResources />')) {
+  errors.push('Customizations.xml must contain the childless WebResources placeholder.');
+}
+
 const actions = workflow?.properties?.definition?.actions;
 if (!actions?.Process || !actions?.Build_EnvMap?.actions?.Retention) {
   errors.push('Flow is missing its sync or 365-day retention scope.');

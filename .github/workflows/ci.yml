@@ -51,10 +51,10 @@ jobs:
         uses: microsoft/powerplatform-actions/actions-install@v1
 
       - name: Pack solutions
-        run: npm run solution:pack -- --version 0.1.1
+        run: npm run solution:pack -- --version 0.1.2
 
       - name: Verify managed package
-        run: npm run solution:verify -- solution/out/DynamicsAgentUsageDashboard_0.1.1_managed.zip
+        run: npm run solution:verify -- solution/out/DynamicsAgentUsageDashboard_0.1.2_managed.zip
 
       - name: Upload solution packages
         uses: actions/upload-artifact@v7

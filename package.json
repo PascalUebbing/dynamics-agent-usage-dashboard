@@ -1,6 +1,6 @@
 {
   "name": "dynamics-agent-usage-dashboard",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Open-source Dynamics 365 dashboard for Customer Intent Agent usage and Copilot Credits.",
   "license": "MIT",
   "author": "Pascal Uebbing",

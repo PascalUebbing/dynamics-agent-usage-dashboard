@@ -37,6 +37,8 @@
   <OrganizationSettings />
   <optionsets />
   <CustomControls />
+  <EntityDataProviders />
+  <WebResources />
   <connectionreferences>
     <connectionreference connectionreferencelogicalname="ccsync_bapref">
       <connectionreferencedisplayname>Agent Usage - Power Platform API</connectionreferencedisplayname>

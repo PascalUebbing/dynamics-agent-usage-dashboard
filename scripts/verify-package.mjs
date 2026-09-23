@@ -24,6 +24,9 @@ for (const webResource of [
   if (!solution.includes(`schemaName="${webResource}"`)) {
     throw new Error(`Packed solution.xml is missing ${webResource}.`);
   }
+  if (!customizations.includes(`<Name>${webResource}</Name>`)) {
+    throw new Error(`Packed customizations.xml does not define ${webResource}.`);
+  }
 }
 
 for (const environmentVariable of [
