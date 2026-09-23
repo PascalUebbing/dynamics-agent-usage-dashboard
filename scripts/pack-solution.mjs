@@ -29,6 +29,22 @@ function parseVersion(argv) {
 }
 
 function runPac(args, cwd) {
+  const actionPacPath = process.env.POWERPLATFORMTOOLS_PACPATH;
+  if (actionPacPath) {
+    const result = spawnSync(actionPacPath, args, {
+      cwd,
+      stdio: 'inherit',
+      shell: false,
+    });
+    if (result.error) {
+      throw result.error;
+    }
+    if (result.status !== 0) {
+      throw new Error(`PAC CLI failed with exit code ${result.status}.`);
+    }
+    return;
+  }
+
   const isWindows = process.platform === 'win32';
   const executable = isWindows ? (process.env.ComSpec ?? 'cmd.exe') : 'pac';
   const commandArgs = isWindows
