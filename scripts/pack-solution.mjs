@@ -1,7 +1,5 @@
-import { ZipArchive } from 'archiver';
 import {
   cpSync,
-  createWriteStream,
   existsSync,
   mkdirSync,
   readFileSync,
@@ -10,6 +8,7 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -17,29 +16,35 @@ const solutionSource = join(root, 'solution', 'src');
 const solutionOutput = join(root, 'solution', 'out');
 const dashboardOutput = join(root, 'dist', 'dashboard');
 const webResourceTarget = join(solutionSource, 'WebResources', 'pue_', 'agentusage');
-const sourceSolutionXmlPath = join(solutionSource, 'Other', 'Solution.xml');
+const solutionXmlPath = join(solutionSource, 'Other', 'Solution.xml');
 const solutionName = 'DynamicsAgentUsageDashboard';
 
 function parseVersion(argv) {
   const index = argv.indexOf('--version');
   const value = index >= 0 ? argv[index + 1] : undefined;
   if (!value || !/^\d+\.\d+\.\d+$/.test(value)) {
-    throw new Error('Use --version with a semantic version, for example --version 0.1.0.');
+    throw new Error('Use --version with a semantic version, for example --version 0.1.1.');
   }
   return value;
 }
 
-function zipDirectory(source, target) {
-  return new Promise((resolve, reject) => {
-    const output = createWriteStream(target);
-    const archive = new ZipArchive({ zlib: { level: 9 } });
-    output.on('close', resolve);
-    output.on('error', reject);
-    archive.on('error', reject);
-    archive.pipe(output);
-    archive.directory(source, false);
-    archive.finalize();
+function runPac(args, cwd) {
+  const isWindows = process.platform === 'win32';
+  const executable = isWindows ? (process.env.ComSpec ?? 'cmd.exe') : 'pac';
+  const commandArgs = isWindows
+    ? ['/d', '/s', '/c', ['pac', ...args].join(' ')]
+    : args;
+  const result = spawnSync(executable, commandArgs, {
+    cwd,
+    stdio: 'inherit',
+    shell: false,
   });
+  if (result.error) {
+    throw result.error;
+  }
+  if (result.status !== 0) {
+    throw new Error(`PAC CLI failed with exit code ${result.status}.`);
+  }
 }
 
 const version = parseVersion(process.argv.slice(2));
@@ -52,8 +57,8 @@ for (const file of ['index.html', 'dashboard.js', 'dashboard.css']) {
   }
 }
 
-const sourceSolutionXml = readFileSync(sourceSolutionXmlPath, 'utf8');
-if (!sourceSolutionXml.includes('<Managed>2</Managed>')) {
+const solutionXml = readFileSync(solutionXmlPath, 'utf8');
+if (!solutionXml.includes('<Managed>2</Managed>')) {
   throw new Error('Solution source must contain <Managed>2</Managed>.');
 }
 
@@ -62,43 +67,48 @@ for (const file of ['index.html', 'dashboard.js', 'dashboard.css']) {
   cpSync(join(dashboardOutput, file), join(webResourceTarget, file));
 }
 writeFileSync(
-  sourceSolutionXmlPath,
-  sourceSolutionXml.replace(/<Version>[^<]+<\/Version>/, `<Version>${solutionVersion}</Version>`),
+  solutionXmlPath,
+  solutionXml.replace(/<Version>[^<]+<\/Version>/, `<Version>${solutionVersion}</Version>`),
   'utf8',
 );
 
 rmSync(solutionOutput, { recursive: true, force: true });
 mkdirSync(solutionOutput, { recursive: true });
 
-for (const packageType of ['managed', 'unmanaged']) {
-  const stagingRoot = join(
-    tmpdir(),
-    `dynamics-agent-usage-pack-${process.pid}-${packageType}`,
-  );
-  const packageRoot = join(stagingRoot, 'package');
-  const packagePath = join(
-    solutionOutput,
-    `${solutionName}_${version}_${packageType}.zip`,
-  );
+const stagingRoot = join(tmpdir(), `agent-usage-pack-${process.pid}`);
+rmSync(stagingRoot, { recursive: true, force: true });
+mkdirSync(stagingRoot, { recursive: true });
+cpSync(solutionSource, join(stagingRoot, 'src'), { recursive: true });
+mkdirSync(join(stagingRoot, 'out'), { recursive: true });
 
-  rmSync(stagingRoot, { recursive: true, force: true });
-  mkdirSync(packageRoot, { recursive: true });
-
-  try {
-    cpSync(solutionSource, packageRoot, { recursive: true });
-    const solutionXml = readFileSync(join(packageRoot, 'Other', 'Solution.xml'), 'utf8')
-      .replace('<Managed>2</Managed>', `<Managed>${packageType === 'managed' ? 1 : 0}</Managed>`)
-      .replace(/<Version>[^<]+<\/Version>/, `<Version>${solutionVersion}</Version>`);
-    writeFileSync(join(packageRoot, 'solution.xml'), solutionXml, 'utf8');
-    cpSync(
-      join(packageRoot, 'Other', 'Customizations.xml'),
-      join(packageRoot, 'customizations.xml'),
+try {
+  for (const packageType of ['Managed', 'Unmanaged']) {
+    const suffix = packageType.toLowerCase();
+    const fileName = `${solutionName}_${version}_${suffix}.zip`;
+    runPac(
+      [
+        'solution',
+        'pack',
+        '--folder',
+        'src',
+        '--zipfile',
+        `out/${fileName}`,
+        '--packagetype',
+        packageType,
+        '--errorlevel',
+        'Warning',
+      ],
+      stagingRoot,
     );
-    rmSync(join(packageRoot, 'Other'), { recursive: true, force: true });
-    await zipDirectory(packageRoot, packagePath);
-  } finally {
-    rmSync(stagingRoot, { recursive: true, force: true });
+
+    const stagedPackage = join(stagingRoot, 'out', fileName);
+    if (!existsSync(stagedPackage)) {
+      throw new Error(`PAC CLI did not create ${stagedPackage}.`);
+    }
+    cpSync(stagedPackage, join(solutionOutput, fileName));
   }
+} finally {
+  rmSync(stagingRoot, { recursive: true, force: true });
 }
 
 console.log(`Created managed and unmanaged ${version} packages in ${solutionOutput}.`);

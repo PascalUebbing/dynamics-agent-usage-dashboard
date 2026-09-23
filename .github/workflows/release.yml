@@ -33,9 +33,16 @@ jobs:
           npm run build
           npm run solution:validate
 
+      - name: Install Power Platform tools
+        uses: microsoft/powerplatform-actions/actions-install@v1
+
       - name: Pack solutions
         shell: bash
         run: npm run solution:pack -- --version "${GITHUB_REF_NAME#v}"
+
+      - name: Verify managed package
+        shell: bash
+        run: npm run solution:verify -- "solution/out/DynamicsAgentUsageDashboard_${GITHUB_REF_NAME#v}_managed.zip"
 
       - name: Create GitHub release
         env:

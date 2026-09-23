@@ -1,6 +1,6 @@
 {
   "name": "dynamics-agent-usage-dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Open-source Dynamics 365 dashboard for Customer Intent Agent usage and Copilot Credits.",
   "license": "MIT",
   "author": "Pascal Uebbing",
@@ -24,7 +24,8 @@
     "format:check": "prettier --check .",
     "preview": "vite preview",
     "solution:validate": "node scripts/validate-solution.mjs",
-    "solution:pack": "node scripts/pack-solution.mjs"
+    "solution:pack": "node scripts/pack-solution.mjs",
+    "solution:verify": "node scripts/verify-package.mjs"
   },
   "dependencies": {
     "@fluentui/react-components": "^9.74.8",
@@ -45,7 +46,7 @@
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "@vitest/coverage-v8": "^5.0.1",
-    "archiver": "^8.0.0",
+    "adm-zip": "^0.6.1",
     "happy-dom": "^20.14.5",
     "oxlint": "^1.81.0",
     "prettier": "^4.0.0-alpha.13",

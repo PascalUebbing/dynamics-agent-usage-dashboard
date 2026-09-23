@@ -96,7 +96,7 @@ npm install
 npm run dev
 npm test
 npm run build
-npm run solution:pack -- --version 0.1.0
+npm run solution:pack -- --version 0.1.1
 ```
 
 Außerhalb von Dynamics zeigt `npm run dev` deterministische Demodaten. In Dynamics
